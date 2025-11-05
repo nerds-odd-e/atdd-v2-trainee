@@ -69,6 +69,9 @@ dependencies {
     testImplementation "com.github.leeonky:DAL-extension-basic:${jfactoryDal}"
     testImplementation "org.reflections:reflections:0.9.12"
     testImplementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.11.4'
+    // MyBatis for test-scope data access implementation
+    testImplementation 'org.mybatis:mybatis:3.5.13'
+    testImplementation 'org.mybatis:mybatis-spring:2.0.7'
 
 }
 
