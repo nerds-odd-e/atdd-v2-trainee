@@ -79,6 +79,29 @@
     }]
     """
 
+  场景: 订单项查询 - mybatis given data in one step
+    假如存在"未发货的 订单M":
+      """
+      code: SN001
+      lines:
+        | itemName | price | quantity |
+        | pc       | 19999 | 1        |
+        | ipad     | 2000  | 2        |
+      """
+    当GET "/orders/SN001/lines"
+    那么response should be:
+    """
+    body.json: [{
+        itemName: pc
+        price: 19999
+        quantity: 1
+    }{
+        itemName: ipad
+        price: 2000
+        quantity: 2
+    }]
+    """
+
   场景: 订单发货
     假如存在"未发货的 订单":
       | code  |

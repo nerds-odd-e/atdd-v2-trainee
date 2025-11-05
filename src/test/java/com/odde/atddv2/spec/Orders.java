@@ -35,6 +35,7 @@ public class Orders {
         @Override
         public void main() {
             property("id").ignore();
+            property("lines").reverseAssociation("order");
         }
 
         @Trait
