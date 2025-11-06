@@ -1,6 +1,7 @@
 package com.odde.atddv2;
 
 import com.github.leeonky.cucumber.restful.RestfulStep;
+import com.github.leeonky.jfactory.JFactory;
 import com.odde.atddv2.repo.OrderRepo;
 import com.odde.atddv2.repo.UserRepo;
 import io.cucumber.java.Before;
@@ -19,10 +20,14 @@ public class ApplicationSteps {
     @Autowired
     private OrderRepo orderRepo;
 
+    @Autowired
+    JFactory jFactory;
+
     @Before(order = 1)
     public void clearDB() {
         userRepo.deleteAll();
         orderRepo.deleteAll();
+        jFactory.getDataRepository().clear();
     }
 
     @Autowired

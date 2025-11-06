@@ -98,6 +98,7 @@
     假如存在"已发货的 物流订单":
     """
     code: SN001
+    express.type: yunda
     """
     当GET "/orders/SN001"
     那么response should be:
