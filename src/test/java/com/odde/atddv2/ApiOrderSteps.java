@@ -1,11 +1,14 @@
 package com.odde.atddv2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.leeonky.jfactory.cucumber.JData;
+import com.github.leeonky.jfactory.cucumber.Table;
 import com.odde.atddv2.entity.Order;
 import com.odde.atddv2.entity.OrderLine;
 import com.odde.atddv2.repo.OrderRepo;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
+import io.cucumber.java.zh_cn.假如;
 import io.cucumber.java.zh_cn.并且;
 import io.cucumber.java.zh_cn.当;
 import io.cucumber.java.zh_cn.那么;
@@ -16,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.transaction.Transactional;
+import java.util.Map;
 
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
@@ -24,13 +28,10 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 public class ApiOrderSteps {
     @Value("${binstd-endpoint.key}")
     private String binstdAppKey;
-
     @Autowired
     private OrderRepo orderRepo;
-
     @Autowired
     private Api api;
-
     @Autowired
     private MockServerClient mockServerClient;
 
@@ -69,5 +70,21 @@ public class ApiOrderSteps {
                 .respond(response().withStatusCode(200)
                         .withHeader(CONTENT_TYPE, "application/json")
                         .withBody(json));
+    }
+
+    @Autowired
+    private JData jData;
+
+    @Autowired
+    private DALMockServer dalMockServer;
+
+    @假如("Mock API:")
+    public void mock_api(String mock) {
+        String[] requestAndResponse = mock.split("---");
+
+        DALMockServer.ResponseBuilder responseBuilder = (DALMockServer.ResponseBuilder)
+                jData.prepare("DefaultResponseBuilder", Table.create(requestAndResponse[1].trim())).get(0);
+
+        dalMockServer.mock(Map.of(requestAndResponse[0].trim(), responseBuilder));
     }
 }
