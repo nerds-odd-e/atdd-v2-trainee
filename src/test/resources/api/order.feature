@@ -104,12 +104,12 @@
 
   场景: 订单项查询 - mybatis single table
     假如存在"未发货的 Mybatis单表_订单":
-      | id | code  |
-      | 1  | SN001 |
+      | code  |
+      | SN001 |
     假如存在"Mybatis单表_订单项":
-      | orderId | itemName | price | quantity |
-      | 1       | pc       | 19999 | 1        |
-      | 1       | ipad     | 2000  | 2        |
+      | order.code | itemName | price | quantity |
+      | SN001      | pc       | 19999 | 1        |
+      | SN001      | ipad     | 2000  | 2        |
     当GET "/orders/SN001/lines"
     那么response should be:
     """

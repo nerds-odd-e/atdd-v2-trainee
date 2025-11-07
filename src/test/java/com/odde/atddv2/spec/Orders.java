@@ -6,7 +6,7 @@ import com.odde.atddv2.entity.Order;
 import com.odde.atddv2.entity.OrderLine;
 import com.odde.atddv2.mybatis.entity.association.OrderLineMybatisWithAssociation;
 import com.odde.atddv2.mybatis.entity.association.OrderMybatisWithAssociation;
-import com.odde.atddv2.mybatis.entity.singletable.OrderLineMybatisSingle;
+import com.odde.atddv2.mybatis.entity.singletable.OrderLineMybatisSingleWithAssociation;
 import com.odde.atddv2.mybatis.entity.singletable.OrderMybatisSingle;
 
 import static com.odde.atddv2.entity.Order.OrderStatus.toBeDelivered;
@@ -59,7 +59,7 @@ public class Orders {
     public static class Mybatis单表_订单 extends Spec<OrderMybatisSingle> {
         @Override
         public void main() {
-//            property("id").ignore();
+            property("id").ignore();
 //            property("lines").reverseAssociation("order");
         }
 
@@ -71,10 +71,10 @@ public class Orders {
         }
     }
 
-    public static class Mybatis单表_订单项 extends Spec<OrderLineMybatisSingle> {
+    public static class Mybatis单表_订单项 extends Spec<OrderLineMybatisSingleWithAssociation> {
         @Override
         public void main() {
-//            property("id").ignore();
+            property("id").ignore();
         }
     }
 }

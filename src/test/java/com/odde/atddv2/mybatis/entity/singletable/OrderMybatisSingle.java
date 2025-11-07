@@ -1,13 +1,10 @@
 package com.odde.atddv2.mybatis.entity.singletable;
 
-import com.odde.atddv2.mybatis.entity.association.OrderLineMybatisWithAssociation;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,5 +19,4 @@ public class OrderMybatisSingle {
     private String status;
     private BigDecimal total;
     private Instant deliveredAt;
-    private List<OrderLineMybatisWithAssociation> lines = new ArrayList<>();
 }
