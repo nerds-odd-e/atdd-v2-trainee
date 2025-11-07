@@ -1,18 +1,18 @@
 package com.odde.atddv2.mybatis.mapper;
 
-import com.odde.atddv2.mybatis.entity.OrderLinePo;
-import com.odde.atddv2.mybatis.entity.OrderPo;
+import com.odde.atddv2.mybatis.entity.OrderLineMybatisWithAssociation;
+import com.odde.atddv2.mybatis.entity.OrderMybatisWithAssociation;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface OrderMapper {
-    void insertOrder(OrderPo order);
+    void insertOrder(OrderMybatisWithAssociation order);
 
-    void insertOrderLine(OrderLinePo line);
+    void insertOrderLine(OrderLineMybatisWithAssociation line);
 
-    List<OrderPo> findAll();
+    List<OrderMybatisWithAssociation> findAll();
 
-    List<OrderLinePo> findAllLines();
+    List<OrderLineMybatisWithAssociation> findAllLines();
 }

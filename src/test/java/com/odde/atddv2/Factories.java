@@ -4,8 +4,8 @@ import com.github.leeonky.jfactory.CompositeRepository;
 import com.github.leeonky.jfactory.DataRepository;
 import com.github.leeonky.jfactory.JFactory;
 import com.github.leeonky.jfactory.repo.JPADataRepository;
-import com.odde.atddv2.mybatis.entity.OrderLinePo;
-import com.odde.atddv2.mybatis.entity.OrderPo;
+import com.odde.atddv2.mybatis.entity.OrderLineMybatisWithAssociation;
+import com.odde.atddv2.mybatis.entity.OrderMybatisWithAssociation;
 import com.odde.atddv2.mybatis.mapper.OrderMapper;
 import lombok.SneakyThrows;
 import org.mockserver.client.MockServerClient;
@@ -43,9 +43,9 @@ public class Factories {
         DataRepository myBatisRepository = new DataRepository() {
             @Override
             public <T> Collection<T> queryAll(Class<T> aClass) {
-                if (aClass.equals(OrderPo.class))
+                if (aClass.equals(OrderMybatisWithAssociation.class))
                     return (Collection<T>) orderMapper.findAll();
-                if (aClass.equals(OrderLinePo.class))
+                if (aClass.equals(OrderLineMybatisWithAssociation.class))
                     return (Collection<T>) orderMapper.findAllLines();
                 return List.of();
             }
@@ -56,9 +56,9 @@ public class Factories {
 
             @Override
             public void save(Object o) {
-                if (o instanceof OrderPo po)
+                if (o instanceof OrderMybatisWithAssociation po)
                     orderMapper.insertOrder(po);
-                if (o instanceof OrderLinePo po)
+                if (o instanceof OrderLineMybatisWithAssociation po)
                     orderMapper.insertOrderLine(po);
             }
         };

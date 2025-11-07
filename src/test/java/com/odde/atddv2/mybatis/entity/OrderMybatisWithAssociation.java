@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class OrderPo {
+public class OrderMybatisWithAssociation {
     private Long id;
     private String code;
     private String productName;
@@ -21,5 +21,5 @@ public class OrderPo {
     private String status;
     private BigDecimal total;
     private Instant deliveredAt;
-    private List<OrderLinePo> lines = new ArrayList<>();
+    private List<OrderLineMybatisWithAssociation> lines = new ArrayList<>();
 }

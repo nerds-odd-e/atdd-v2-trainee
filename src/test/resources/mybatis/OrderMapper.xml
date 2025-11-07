@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.odde.atddv2.mybatis.mapper.OrderMapper">
 
-    <resultMap id="OrderResult" type="com.odde.atddv2.mybatis.entity.OrderPo">
+    <resultMap id="OrderResult" type="com.odde.atddv2.mybatis.entity.OrderMybatisWithAssociation">
         <id property="id" column="id"/>
         <result property="code" column="code"/>
         <result property="productName" column="product_name"/>
@@ -15,7 +15,7 @@
         <result property="deliveredAt" column="delivered_at"/>
     </resultMap>
 
-    <resultMap id="OrderLineResult" type="com.odde.atddv2.mybatis.entity.OrderLinePo">
+    <resultMap id="OrderLineResult" type="com.odde.atddv2.mybatis.entity.OrderLineMybatisWithAssociation">
         <id property="id" column="id"/>
         <result property="itemName" column="item_name"/>
         <result property="price" column="price"/>
@@ -31,7 +31,8 @@
         SELECT * FROM order_lines
     </select>
 
-    <insert id="insertOrder" parameterType="com.odde.atddv2.mybatis.entity.OrderPo" useGeneratedKeys="true"
+    <insert id="insertOrder" parameterType="com.odde.atddv2.mybatis.entity.OrderMybatisWithAssociation"
+            useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO orders(code, product_name, recipient_name, recipient_mobile, recipient_address, deliver_no, status,
         total, delivered_at)
@@ -39,7 +40,8 @@
         #{status}, #{total}, #{deliveredAt})
     </insert>
 
-    <insert id="insertOrderLine" parameterType="com.odde.atddv2.mybatis.entity.OrderPo" useGeneratedKeys="true"
+    <insert id="insertOrderLine" parameterType="com.odde.atddv2.mybatis.entity.OrderMybatisWithAssociation"
+            useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO order_lines(item_name, price, quantity, order_id)
         VALUES(#{itemName}, #{price}, #{quantity}, #{order.id})

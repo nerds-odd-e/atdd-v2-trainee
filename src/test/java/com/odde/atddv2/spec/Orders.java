@@ -4,8 +4,8 @@ import com.github.leeonky.jfactory.Spec;
 import com.github.leeonky.jfactory.Trait;
 import com.odde.atddv2.entity.Order;
 import com.odde.atddv2.entity.OrderLine;
-import com.odde.atddv2.mybatis.entity.OrderLinePo;
-import com.odde.atddv2.mybatis.entity.OrderPo;
+import com.odde.atddv2.mybatis.entity.OrderLineMybatisWithAssociation;
+import com.odde.atddv2.mybatis.entity.OrderMybatisWithAssociation;
 
 import static com.odde.atddv2.entity.Order.OrderStatus.toBeDelivered;
 
@@ -31,7 +31,7 @@ public class Orders {
         }
     }
 
-    public static class 订单M extends Spec<OrderPo> {
+    public static class 订单M extends Spec<OrderMybatisWithAssociation> {
         @Override
         public void main() {
             property("id").ignore();
@@ -46,7 +46,7 @@ public class Orders {
         }
     }
 
-    public static class 订单项M extends Spec<OrderLinePo> {
+    public static class 订单项M extends Spec<OrderLineMybatisWithAssociation> {
         @Override
         public void main() {
             property("id").ignore();

@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class OrderLinePo {
+public class OrderLineMybatisWithAssociation {
     private Long id;
     private String itemName;
     private BigDecimal price;
     private int quantity;
-    private OrderPo order;
+    private OrderMybatisWithAssociation order;
 }
