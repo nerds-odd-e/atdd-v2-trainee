@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.odde.atddv2.mybatis.mapper.OrderMapper">
 
-    <resultMap id="OrderResult" type="com.odde.atddv2.mybatis.entity.OrderMybatisWithAssociation">
+    <resultMap id="OrderResult" type="com.odde.atddv2.mybatis.entity.association.OrderMybatisWithAssociation">
         <id property="id" column="id"/>
         <result property="code" column="code"/>
         <result property="productName" column="product_name"/>
@@ -15,7 +15,27 @@
         <result property="deliveredAt" column="delivered_at"/>
     </resultMap>
 
-    <resultMap id="OrderLineResult" type="com.odde.atddv2.mybatis.entity.OrderLineMybatisWithAssociation">
+    <resultMap id="OrderLineResult" type="com.odde.atddv2.mybatis.entity.association.OrderLineMybatisWithAssociation">
+        <id property="id" column="id"/>
+        <result property="itemName" column="item_name"/>
+        <result property="price" column="price"/>
+        <result property="quantity" column="quantity"/>
+    </resultMap>
+
+    <resultMap id="OrderResult2" type="com.odde.atddv2.mybatis.entity.singletable.OrderMybatisSingle">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="productName" column="product_name"/>
+        <result property="recipientName" column="recipient_name"/>
+        <result property="recipientMobile" column="recipient_mobile"/>
+        <result property="recipientAddress" column="recipient_address"/>
+        <result property="deliverNo" column="deliver_no"/>
+        <result property="status" column="status"/>
+        <result property="total" column="total"/>
+        <result property="deliveredAt" column="delivered_at"/>
+    </resultMap>
+
+    <resultMap id="OrderLineResult2" type="com.odde.atddv2.mybatis.entity.singletable.OrderLineMybatisSingle">
         <id property="id" column="id"/>
         <result property="itemName" column="item_name"/>
         <result property="price" column="price"/>
@@ -31,7 +51,7 @@
         SELECT * FROM order_lines
     </select>
 
-    <insert id="insertOrder" parameterType="com.odde.atddv2.mybatis.entity.OrderMybatisWithAssociation"
+    <insert id="insertOrder" parameterType="com.odde.atddv2.mybatis.entity.association.OrderMybatisWithAssociation"
             useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO orders(code, product_name, recipient_name, recipient_mobile, recipient_address, deliver_no, status,
@@ -40,10 +60,34 @@
         #{status}, #{total}, #{deliveredAt})
     </insert>
 
-    <insert id="insertOrderLine" parameterType="com.odde.atddv2.mybatis.entity.OrderMybatisWithAssociation"
+    <insert id="insertOrderLine" parameterType="com.odde.atddv2.mybatis.entity.association.OrderMybatisWithAssociation"
             useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO order_lines(item_name, price, quantity, order_id)
         VALUES(#{itemName}, #{price}, #{quantity}, #{order.id})
+    </insert>
+
+
+    <select id="findAll2" resultMap="OrderResult2">
+        SELECT * FROM orders ORDER BY id
+    </select>
+
+    <select id="findAllLines2" resultMap="OrderLineResult2">
+        SELECT * FROM order_lines
+    </select>
+
+    <insert id="insertOrder2" parameterType="com.odde.atddv2.mybatis.entity.singletable.OrderMybatisSingle"
+            keyProperty="id">
+        INSERT INTO orders(id, code, product_name, recipient_name, recipient_mobile, recipient_address, deliver_no,
+        status,
+        total, delivered_at)
+        VALUES(#{id}, #{code}, #{productName}, #{recipientName}, #{recipientMobile}, #{recipientAddress}, #{deliverNo},
+        #{status}, #{total}, #{deliveredAt})
+    </insert>
+
+    <insert id="insertOrderLine2" parameterType="com.odde.atddv2.mybatis.entity.singletable.OrderLineMybatisSingle"
+            keyProperty="id">
+        INSERT INTO order_lines(id, item_name, price, quantity, order_id)
+        VALUES(#{id}, #{itemName}, #{price}, #{quantity}, #{orderId})
     </insert>
 </mapper>

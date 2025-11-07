@@ -1,4 +1,4 @@
-package com.odde.atddv2.mybatis.entity;
+package com.odde.atddv2.mybatis.entity.association;
 
 import lombok.Getter;
 import lombok.Setter;

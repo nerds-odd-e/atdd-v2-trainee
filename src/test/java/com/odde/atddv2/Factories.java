@@ -4,8 +4,10 @@ import com.github.leeonky.jfactory.CompositeRepository;
 import com.github.leeonky.jfactory.DataRepository;
 import com.github.leeonky.jfactory.JFactory;
 import com.github.leeonky.jfactory.repo.JPADataRepository;
-import com.odde.atddv2.mybatis.entity.OrderLineMybatisWithAssociation;
-import com.odde.atddv2.mybatis.entity.OrderMybatisWithAssociation;
+import com.odde.atddv2.mybatis.entity.association.OrderLineMybatisWithAssociation;
+import com.odde.atddv2.mybatis.entity.association.OrderMybatisWithAssociation;
+import com.odde.atddv2.mybatis.entity.singletable.OrderLineMybatisSingle;
+import com.odde.atddv2.mybatis.entity.singletable.OrderMybatisSingle;
 import com.odde.atddv2.mybatis.mapper.OrderMapper;
 import lombok.SneakyThrows;
 import org.mockserver.client.MockServerClient;
@@ -47,6 +49,10 @@ public class Factories {
                     return (Collection<T>) orderMapper.findAll();
                 if (aClass.equals(OrderLineMybatisWithAssociation.class))
                     return (Collection<T>) orderMapper.findAllLines();
+                if (aClass.equals(OrderMybatisSingle.class))
+                    return (Collection<T>) orderMapper.findAll2();
+                if (aClass.equals(OrderLineMybatisSingle.class))
+                    return (Collection<T>) orderMapper.findAllLines2();
                 return List.of();
             }
 
@@ -60,6 +66,10 @@ public class Factories {
                     orderMapper.insertOrder(po);
                 if (o instanceof OrderLineMybatisWithAssociation po)
                     orderMapper.insertOrderLine(po);
+                if (o instanceof OrderLineMybatisSingle ols)
+                    orderMapper.insertOrderLine2(ols);
+                if (o instanceof OrderMybatisSingle oms)
+                    orderMapper.insertOrder2(oms);
             }
         };
         CompositeRepository compositeRepository = new CompositeRepository();
