@@ -49,9 +49,9 @@ public class Factories {
                     return (Collection<T>) orderMapper.findAll();
                 if (aClass.equals(OrderLineMybatisWithAssociation.class))
                     return (Collection<T>) orderMapper.findAllLines();
-                if (aClass.equals(OrderMybatisSingle.class))
+                if (OrderMybatisSingle.class.isAssignableFrom(aClass))
                     return (Collection<T>) orderMapper.findAll2();
-                if (aClass.equals(OrderLineMybatisSingle.class))
+                if (OrderLineMybatisSingle.class.isAssignableFrom(aClass))
                     return (Collection<T>) orderMapper.findAllLines2();
                 return List.of();
             }
