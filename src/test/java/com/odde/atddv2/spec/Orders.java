@@ -31,7 +31,6 @@ public class Orders {
 
         @Override
         public void main() {
-            property("deliverNo").ignore();
             super.main();
         }
 

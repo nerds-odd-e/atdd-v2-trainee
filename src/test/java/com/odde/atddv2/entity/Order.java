@@ -3,7 +3,7 @@ package com.odde.atddv2.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.odde.atddv2.EntityFactory;
 import com.odde.atddv2.entity.mongo.Express;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,16 +33,16 @@ public class Order {
     private String deliverNo;
 
     public String getDeliverNo() {
+        Express express = getExpress();
         return express == null ? deliverNo : express.getNumber();
-    }
-
-    public void setDeliverNo(String deliverNo) {
-        express = null;
-        this.deliverNo = deliverNo;
     }
 
     @Transient
     private Express express;
+
+    public Express getExpress() {
+        return express != null ? express : EntityFactory.runtimeInstance.type(Express.class).property("number", deliverNo).query();
+    }
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;

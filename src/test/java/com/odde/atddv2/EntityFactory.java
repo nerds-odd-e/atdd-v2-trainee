@@ -7,9 +7,12 @@ import com.github.leeonky.util.Classes;
 
 public class EntityFactory extends JFactory {
 
+    public static EntityFactory runtimeInstance;
+
     public EntityFactory(DataRepository dataRepository) {
         super(dataRepository);
         configFactory();
+        runtimeInstance = this;
     }
 
     private void configFactory() {
