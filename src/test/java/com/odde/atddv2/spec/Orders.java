@@ -31,7 +31,7 @@ public class Orders {
         }
     }
 
-    public static class Mybatis单表_订单 extends Spec<OrderWithAssociation> {
+    public static class Mybatis_订单 extends Spec<OrderWithAssociation> {
         @Override
         public void main() {
             property("id").ignore();
@@ -46,11 +46,11 @@ public class Orders {
         }
     }
 
-    public static class Mybatis单表_订单项 extends Spec<OrderLineWithAssociation> {
+    public static class Mybatis_订单项 extends Spec<OrderLineWithAssociation> {
         @Override
         public void main() {
             property("id").ignore();
-            property("order").is(Mybatis单表_订单.class);
+            property("order").is(Mybatis_订单.class);
         }
     }
 }

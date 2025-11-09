@@ -57,11 +57,11 @@
     }]
     """
 
-  场景: 订单项查询 - mybatis single table
-    假如存在"未发货的 Mybatis单表_订单":
+  场景: 订单项查询 - mybatis
+    假如存在"未发货的 Mybatis_订单":
       | code  |
       | SN001 |
-    假如存在"Mybatis单表_订单项":
+    假如存在"Mybatis_订单项":
       | order.code | itemName | price | quantity |
       | SN001      | pc       | 19999 | 1        |
       | SN001      | ipad     | 2000  | 2        |
@@ -79,8 +79,8 @@
     }]
     """
 
-  场景: 订单项查询 - mybatis single table default order
-    假如存在"Mybatis单表_订单项":
+  场景: 订单项查询 - mybatis default order
+    假如存在"Mybatis_订单项":
       | order.code | itemName | price | quantity |
       | SN001      | pc       | 19999 | 1        |
       | SN001      | ipad     | 2000  | 2        |
@@ -98,8 +98,8 @@
     }]
     """
 
-  场景: 订单项查询 - mybatis single table given data in one step
-    假如存在"未发货的 Mybatis单表_订单":
+  场景: 订单项查询 - mybatis given data in one step
+    假如存在"未发货的 Mybatis_订单":
       """
       code: SN001
       lines:

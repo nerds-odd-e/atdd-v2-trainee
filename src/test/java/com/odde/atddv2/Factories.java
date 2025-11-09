@@ -71,10 +71,10 @@ public class Factories {
 
             @Override
             public void save(Object o) {
-                if (o instanceof OrderLine ols)
-                    orderMapper.insertOrderLine(ols);
-                if (o instanceof Order oms)
-                    orderMapper.insertOrder(oms);
+                if (o instanceof OrderLine orderLine)
+                    orderMapper.insertOrderLine(orderLine);
+                if (o instanceof Order order)
+                    orderMapper.insertOrder(order);
             }
         };
         CompositeRepository compositeRepository = new CompositeRepository();

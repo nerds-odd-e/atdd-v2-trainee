@@ -1,5 +1,6 @@
 package com.odde.atddv2.mybatis.entity;
 
+import com.odde.atddv2.EntityFactory;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,11 @@ public class OrderLineWithAssociation extends OrderLine {
 
     @Override
     public Long getOrderId() {
-        return order.getId();
+        Order order = getOrder();
+        return order != null ? order.getId() : getOrderId();
+    }
+
+    public OrderWithAssociation getOrder() {
+        return order != null ? order : EntityFactory.runtimeInstance.type(OrderWithAssociation.class).property("id", getOrderId()).query();
     }
 }
