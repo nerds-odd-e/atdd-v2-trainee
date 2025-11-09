@@ -4,13 +4,14 @@ import com.github.leeonky.jfactory.CompositeRepository;
 import com.github.leeonky.jfactory.DataRepository;
 import com.github.leeonky.jfactory.JFactory;
 import com.github.leeonky.jfactory.repo.JPADataRepository;
-import com.odde.atddv2.mybatis.entity.association.OrderLineMybatisWithAssociation;
-import com.odde.atddv2.mybatis.entity.association.OrderMybatisWithAssociation;
-import com.odde.atddv2.mybatis.entity.singletable.OrderLineMybatisSingle;
-import com.odde.atddv2.mybatis.entity.singletable.OrderMybatisSingle;
+import com.odde.atddv2.mybatis.entity.Order;
+import com.odde.atddv2.mybatis.entity.OrderLine;
+import com.odde.atddv2.mybatis.entity.OrderLineWithAssociation;
+import com.odde.atddv2.mybatis.entity.OrderWithAssociation;
 import com.odde.atddv2.mybatis.mapper.OrderMapper;
 import lombok.SneakyThrows;
 import org.mockserver.client.MockServerClient;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,14 +46,22 @@ public class Factories {
         DataRepository myBatisRepository = new DataRepository() {
             @Override
             public <T> Collection<T> queryAll(Class<T> aClass) {
-                if (aClass.equals(OrderMybatisWithAssociation.class))
-                    return (Collection<T>) orderMapper.findAll();
-                if (aClass.equals(OrderLineMybatisWithAssociation.class))
-                    return (Collection<T>) orderMapper.findAllLines();
-                if (OrderMybatisSingle.class.isAssignableFrom(aClass))
-                    return (Collection<T>) orderMapper.findAll2();
-                if (OrderLineMybatisSingle.class.isAssignableFrom(aClass))
-                    return (Collection<T>) orderMapper.findAllLines2();
+                if (aClass.equals(OrderWithAssociation.class)) {
+                    return (Collection<T>) orderMapper.findAll().stream().map(o -> {
+                        OrderWithAssociation orderMybatisSingleWithAssociation = new OrderWithAssociation();
+                        BeanUtils.copyProperties(o, orderMybatisSingleWithAssociation);
+                        return orderMybatisSingleWithAssociation;
+                    }).toList();
+                }
+
+                if (aClass.equals(OrderLineWithAssociation.class)) {
+                    return (Collection<T>) orderMapper.findAllLines().stream().map(ol -> {
+                        OrderLineWithAssociation orderLineMybatisSingleWithAssociation = new OrderLineWithAssociation();
+                        BeanUtils.copyProperties(ol, orderLineMybatisSingleWithAssociation);
+                        return orderLineMybatisSingleWithAssociation;
+                    }).toList();
+                }
+
                 return List.of();
             }
 
@@ -62,14 +71,10 @@ public class Factories {
 
             @Override
             public void save(Object o) {
-                if (o instanceof OrderMybatisWithAssociation po)
-                    orderMapper.insertOrder(po);
-                if (o instanceof OrderLineMybatisWithAssociation po)
-                    orderMapper.insertOrderLine(po);
-                if (o instanceof OrderLineMybatisSingle ols)
-                    orderMapper.insertOrderLine2(ols);
-                if (o instanceof OrderMybatisSingle oms)
-                    orderMapper.insertOrder2(oms);
+                if (o instanceof OrderLine ols)
+                    orderMapper.insertOrderLine(ols);
+                if (o instanceof Order oms)
+                    orderMapper.insertOrder(oms);
             }
         };
         CompositeRepository compositeRepository = new CompositeRepository();
